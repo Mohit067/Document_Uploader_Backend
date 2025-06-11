@@ -1,4 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config(); // ✅ Load env variables from .env file
+
 import nodemailer from 'nodemailer';
+
+// 🔍 Debug log to check if ENV variables are loading correctly
+console.log('📧 Email ENV:', process.env.EMAIL_USER, process.env.EMAIL_PASS ? '✅ Exists' : '❌ Missing');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -11,14 +17,14 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = async (to, subject, htmlContent) => {
   try {
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"Whitecircle Group" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html: htmlContent
     };
     await transporter.sendMail(mailOptions);
-    console.log(`Email sent to ${to} for subject: ${subject}`);
+    console.log(`✅ Email sent to ${to} for subject: ${subject}`);
   } catch (error) {
-    console.error(`Error sending email to ${to}:`, error);
+    console.error(`❌ Error sending email to ${to}:`, error);
   }
 };

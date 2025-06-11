@@ -5,7 +5,7 @@ import { sendEmail } from './emailService.js';
 
 const startScheduler = () => {
     // Schedule to run every day at 9:00 AM
-    new cron.CronJob('0 9 * * *', async () => {
+    new cron.CronJob('* * * * *', async () => {
         console.log('Running daily deadline reminder check...');
         try {
             const today = new Date();
